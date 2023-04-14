@@ -1,0 +1,17 @@
+﻿@model HomeViewModel
+@{
+
+}
+
+<div class="mb-4">
+    <h1 class="mb-4">Categories:</h1>
+<table>
+    @foreach(var category in Model.Categories)
+    {
+        <tr>
+            <td><a asp-area="" asp-controller="Category" asp-action="Index" asp-route-id="@category.id" class="btn shadow mb-2 btn-light w-100">@category.c_name</a></td>
+        </tr>
+    }
+</table>
+</div>
+<a asp-area="" asp-controller="Category" asp-action="Create" class="btn shadow btn-dark">Create category</a>

@@ -1,0 +1,16 @@
+﻿@model CategoryViewModel
+
+@{
+
+}
+<div class="h1 mb-4 border-bottom">
+    @Model.Category.c_name
+   
+</div>
+<hr />
+<p>Enter wanted name</p>
+<form method="post">
+    
+    <input type="text" value="@Model.Category.c_name" name="c_name" />  
+    <button class="btn shadow btn-dark" type="submit">Edit</button>
+</form>

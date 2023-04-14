@@ -1,0 +1,85 @@
+﻿@model CategoryOutputViewModel
+    
+@{
+    
+}
+<div style="width: 800px" class="container">
+<div class="h1 mb-4 border-bottom pb-2">
+    @Model.Category.c_name
+        <a class="btn btn-light p-0 px-2 py-1 pb-2 ms-2" asp-action="Create" asp-controller="TaskList" asp-route-category_id="@Model.Category.id">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="black" class="bi bi-plus-square" viewBox="0 0 16 16">
+            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+        </svg>
+    </a>
+
+
+        <a class="btn btn-light float-end mt-2  p-0 px-2 py-1 pb-2" asp-action="Delete" asp-controller="Category" asp-route-id="@Model.Category.id">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="black" class="bi bi-trash3-fill hove" viewBox="0 0 16 16">
+            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+        </svg>
+    </a>
+        <a class=" btn btn-light float-end me-2 mt-2 p-0 px-2 py-1 pb-2" asp-action="Update" asp-controller="Category" asp-route-id="@Model.Category.id" style="text-decoration:none; ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="black" class="bi bi-pen" viewBox="0 0 16 16">
+                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+            </svg>
+        </a>
+</div>
+<ol class="list-group list-group-numbered">
+ @foreach (var TaskList in Model.TaskLists)
+    {
+        int i=0;
+        <li class="list-group-item d-flex justify-content-between align-items-start mb-4 shadow">
+            <div class="ms-2 me-auto">
+                    <div class="fw-bold mb-2">
+                        @TaskList.l_name
+                        <a class="btn btn-light p-0 px-2 pb-1 ms-2" asp-action="Create" asp-controller="Task" asp-route-category_id="@Model.Category.id" asp-route-task_list_id="@TaskList.id">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="black" class="bi bi-plus-square " viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            </svg>
+                        </a>
+                        
+                    </div>
+                <ul class="list-group list-group-flush">
+                    
+                        @foreach (var task in Model.Tasks)
+                        {
+                            if (task.task_list_id == TaskList.id)
+                            {
+                                if (task.completed)
+                                {
+                                    <li class="list-group-item text-decoration-line-through"  >  @task.t_name  
+                                        <br>@task.deadline_date.ToString().Split(" ")[0] 
+                                        
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="list-group-item ">  @task.t_name  <br>@task.deadline_date.ToString().Split(" ")[0] </li>
+                                }
+
+                            i++;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                </ul>
+            </div>
+                <a class="btn btn-light p-0 px-2 pb-1 ms-2 me-2" asp-action="Delete" asp-controller="TaskList" asp-route-id="@TaskList.id" asp-route-categoryID="@Model.Category.id">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="black" class="bi bi-trash3-fill hove" viewBox="0 0 16 16">
+                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+                    </svg>
+                </a>
+            <span class="badge bg-primary bg-dark rounded-pill">@i</span>
+        </li>
+}
+</div>
+
+
+
+    
+    
+</ol>
