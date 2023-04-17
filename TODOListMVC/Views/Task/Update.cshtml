@@ -1,0 +1,17 @@
+﻿@model TaskViewModel
+
+@{
+
+}
+<div class="h1 mb-4 border-bottom">
+    @Model.Task.t_name;
+
+</div>
+<hr />
+<p>Enter wanted name</p>
+<form method="post">
+
+    <input type="text" value="@Model.Task.t_name" name="t_name" />
+    <input type="date" value="@Model.Task.deadline_date"  name="deadline_date" />
+    <button class="btn shadow btn-dark" type="submit">Edit</button>
+</form>

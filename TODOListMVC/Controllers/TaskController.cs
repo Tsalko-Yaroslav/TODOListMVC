@@ -6,11 +6,11 @@ namespace TODOListMVC.Controllers
 {
     public class TaskController : Controller
     {
-        private readonly ITasksRepository _taskListRepository;
+        private readonly ITasksRepository _taskRepository;
 
-        public TaskController(ITasksRepository taskListRepository)
+        public TaskController(ITasksRepository taskRepository)
         {
-            _taskListRepository = taskListRepository;
+            _taskRepository = taskRepository;
         }
 
         public IActionResult Create()
@@ -20,9 +20,40 @@ namespace TODOListMVC.Controllers
         [HttpPost]
         public IActionResult Create(TaskImputViewModel taskInputViewModel, int category_id)
         {
-            _taskListRepository.CreateTask(taskInputViewModel);
+            _taskRepository.CreateTask(taskInputViewModel);
 
             return RedirectToAction("Index", "Category", new { @id = category_id });
         }
+        public IActionResult Delete(int id, int category_id)
+        {
+            _taskRepository.DeleteTask(id);
+            return RedirectToAction("Index", "Category", new { @id = category_id });
+        }
+        public IActionResult Update(int id, int category_id)
+        {
+            var model = new TaskViewModel
+            {
+                Task = _taskRepository.GetTaskById(id),
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Update(TaskUpdateViewModel taskUpdateViewModel, int category_id)
+        {
+            _taskRepository.UpdateTask(taskUpdateViewModel);
+            return RedirectToAction("Index", "Category", new { @id = category_id });
+        }
+        public IActionResult Check(int id, int category_id) 
+        {
+            _taskRepository.SetCheckPointById(id);
+            return RedirectToAction("Index", "Category", new { @id = category_id });
+
+        }
+        public IActionResult UnCheck(int id, int category_id)
+        {
+            _taskRepository.SetUncheckPointByid(id);
+            return RedirectToAction("Index", "Category", new { @id = category_id });
+        }
     }
+        
 }

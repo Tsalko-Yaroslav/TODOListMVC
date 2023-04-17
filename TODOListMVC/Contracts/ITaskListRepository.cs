@@ -9,7 +9,9 @@ namespace TODOListMVC.Contracts
         public TaskList GetTaskListById(int id);
         public void CreateTaskList(TaskListInputViewModel tasklists);
         public void DeleteTaskLIst(int id);
-        public void UpdateTaskList(int id, string wantedName);
+        public void UpdateTaskList(int id, string l_name);
         
+
+
     }
 }

@@ -67,11 +67,12 @@ namespace TODOListMVC.Repository
             
         }
 
-        public void UpdateCategory(int id, string wantedName)
+        public void UpdateCategory(int id, string c_name)
         {
-            var query = "UPDATE category SET c_name = @wantedName WHERE id=@id";
+            var query = "UPDATE category SET c_name = @c_name WHERE id=@id";
             var parameters = new DynamicParameters();
             parameters.Add("id", id, DbType.Int32);
+            parameters.Add("c_name", c_name, DbType.String);
             using (var connection = _dapperContext.CreateConnection())
             {
                 connection.Execute(query, parameters);

@@ -62,10 +62,10 @@ namespace TODOListMVC.Controllers
             
         }
         [HttpPost]
-        public IActionResult Update(int id, string wantedName)
+        public IActionResult Update(int id, string c_name)
         {
-            _categoryRepository.UpdateCategory(id, wantedName);
-            return RedirectToAction("Index/@id", "Category"); ;
+            _categoryRepository.UpdateCategory(id, c_name);
+            return RedirectToAction("Index", "Category",new {id}); 
         }
     }
 }

@@ -44,7 +44,14 @@ namespace TODOListMVC.Repository
 
         public TaskList GetTaskListById(int id)
         {
-            throw null;
+            var query = "SELECT * FROM tasklist WHERE id=@id";
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id, DbType.Int32);
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                var tasklist = connection.QuerySingleOrDefault<TaskList>(query, parameters);
+                return tasklist;
+            }
         }
 
         public IEnumerable<TaskList> GetTaskListsByCategId(int id)
@@ -59,10 +66,19 @@ namespace TODOListMVC.Repository
             }
         }
 
-        public void UpdateTaskList(int id, string wantedName)
+        public void UpdateTaskList(int id, string l_name)
         {
-            throw null;
+            var query = "UPDATE tasklist SET l_name = @l_name WHERE id=@id";
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id, DbType.Int32);
+            parameters.Add("l_name", l_name, DbType.String);
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                connection.Execute(query, parameters);
+
+            }
         }
+        
         
     }
 }

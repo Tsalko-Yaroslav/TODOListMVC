@@ -1,5 +1,7 @@
 ﻿using Dapper;
+using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 using TODOListMVC.Context;
 using TODOListMVC.Contracts;
 using TODOListMVC.Models;
@@ -14,6 +16,17 @@ namespace TODOListMVC.Repository
         public TasksRepository(DapperContext dapperContext)
         {
             _dapperContext = dapperContext;
+        }
+        public Tasks GetTaskById(int id)
+        {
+            var query = "SELECT * FROM tasks WHERE id=@id";
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id, DbType.Int32);
+            using(var connection = _dapperContext.CreateConnection())
+            {
+                var task = connection.QuerySingleOrDefault<Tasks>(query, parameters);
+                return task;
+            }
         }
         public IEnumerable<Tasks> GetTasksByListID(int listID)
         {
@@ -50,6 +63,53 @@ namespace TODOListMVC.Repository
             using (var connection = _dapperContext.CreateConnection())
             {
                 connection.Execute(query, parameters);
+            }
+        }
+        public void DeleteTask(int id)
+        {
+            var query = "DELETE FROM tasks WHERE id=@id";
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id, DbType.Int32);
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                connection.Execute(query, parameters);
+
+            }
+        }
+        public void UpdateTask(TaskUpdateViewModel task)
+        {
+            var query = "UPDATE tasks SET t_name=@t_name, deadline_date=@deadline_date WHERE id=@id";
+            var parameters = new DynamicParameters();
+            parameters.Add("id", task.id, DbType.Int32);
+            parameters.Add("t_name", task.t_name.ToString(), DbType.String);
+            parameters.Add("deadline_date", task.deadline_date, DbType.Date);
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                connection.Execute(query, parameters);
+
+            }
+
+        }
+        public void SetCheckPointById(int id)
+        {
+            var query = "UPDATE tasks SET completed=1 WHERE id=@id";
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id, DbType.Int32);
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                connection.Execute(query, parameters);
+
+            }
+        }
+        public void SetUncheckPointByid(int id)
+        {
+            var query = "UPDATE tasks SET completed=0 WHERE id=@id";
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id, DbType.Int32);
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                connection.Execute(query, parameters);
+
             }
         }
     }

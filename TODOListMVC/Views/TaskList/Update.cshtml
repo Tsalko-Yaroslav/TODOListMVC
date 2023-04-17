@@ -1,0 +1,16 @@
+﻿@model TaskListViewModel
+
+@{
+
+}
+<div class="h1 mb-4 border-bottom">
+    @Model.TaskList.l_name;
+
+</div>
+<hr />
+<p>Enter wanted name</p>
+<form method="post">
+
+    <input type="text" value="@Model.TaskList.l_name" name="l_name" />
+    <button class="btn shadow btn-dark" type="submit">Edit</button>
+</form>

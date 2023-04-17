@@ -2,6 +2,7 @@
 {
     public class CategoryUpdateViewModel
     {
+       
         public string c_name { get; set; }
 
     }
